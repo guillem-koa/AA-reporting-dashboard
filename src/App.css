@@ -1,0 +1,37 @@
+/* App.css */
+.App {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+/* Make the table horizontally scrollable */
+.table-container {
+  overflow-x: auto;
+  max-width: 80%;
+  padding: 20px; /* Adjust the padding value as needed */
+}
+
+table {
+  width: 80%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  margin: 20px auto; /* Center the table and add margins */
+}
+
+/* Reduce the font size for table header (th) and table data (td) */
+th, td {
+  font-size: 12px; /* Adjust the font size as needed */
+  padding: 8px; /* Add padding to table cells */
+  border: 1px solid #ccc;
+}
+
+th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
