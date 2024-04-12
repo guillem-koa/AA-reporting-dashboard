@@ -19,7 +19,7 @@ function Table({ data }) {
             <td>{item['Cycle Progress']}</td>
             <td>{item['Cycle Start']}</td>
             <td>{item['Cycle Complete']}</td>
-            <td><button> Generate</button></td>
+            <td><button> Generate Outputs</button></td>
           </tr>
         ))}
       </tbody>
