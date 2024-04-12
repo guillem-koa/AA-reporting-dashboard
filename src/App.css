@@ -6,6 +6,10 @@
   padding: 20px;
 }
 
+h1 {
+  margin: 50px; /* Adds margin of 20 pixels to the top and bottom */
+}
+
 /* Make the table horizontally scrollable */
 .table-container {
   overflow-x: auto;
