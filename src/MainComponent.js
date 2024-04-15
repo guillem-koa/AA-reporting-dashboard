@@ -40,7 +40,7 @@ function MainComponent() {
               ))}
               <td>
                 <button onClick={() => handleButtonClick(item['Machine'], item['Cycle Start'])}>
-                  Go to Output
+                  Generate Output
                 </button>
               </td>
             </tr>
