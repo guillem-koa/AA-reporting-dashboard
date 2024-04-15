@@ -19,15 +19,20 @@ function App() {
   ];
 
   return (
-
-    /*<div>
+  /*
+    <div>
     <h2> Aquagar Generate Outputs</h2>
     <GenerateOutputsTable data={outputsDataArray} />
     <h2> Aquagar Send Emails</h2>
     <GenerateEmailsTable data={emailsDataArray} />
+    
+    <a href="http://37.187.176.243:8001/AA_generate_outputs?serial_num=AA-202312-002&experiment_folder=2023-11-22 18/23/52" target="_blank">
+      <button> Generate </button>
+    </a>
+
   </div> */
 
-    ReactDOM.render(<MainComponent />, document.getElementById('root'))
+  ReactDOM.render(<MainComponent />, document.getElementById('root')) 
 
   );
 }

@@ -29,6 +29,7 @@ function MainComponent() {
             {apiResponse[0] && Object.keys(apiResponse[0][0]).map(key => (
               <th key={key}>{key}</th>
             ))}
+          <th>Action</th>
           </tr>
         </thead>
         <tbody>
@@ -37,6 +38,11 @@ function MainComponent() {
               {Object.values(item).map((value, index) => (
                 <td key={index}>{value}</td>
               ))}
+              <td>
+                <button onClick={() => handleButtonClick(item['Machine'], item['Cycle Start'])}>
+                  Go to Output
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>
@@ -68,6 +74,11 @@ function MainComponent() {
     </div>
   );
 
+  function handleButtonClick(machine, cycleStart) {
+    const url = `http://37.187.176.243:8001/AA_generate_outputs?serial_num=${machine}&experiment_folder=${cycleStart}`;
+    window.open(url, '_blank');
+  }
+
   if (isLoading) {
     return (
         <div style={{ textAlign: 'center' }}>
@@ -86,5 +97,6 @@ function MainComponent() {
     </div>
   );
 }
+
 
 export default MainComponent;
