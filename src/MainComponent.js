@@ -39,7 +39,7 @@ function MainComponent() {
                 <td key={index}>{value}</td>
               ))}
               <td>
-                <button onClick={() => handleButtonClick(item['Machine'], item['Cycle Start'])}>
+                <button onClick={() => handleOutputsButtonClick(item['Machine'], item['Cycle Start'])}>
                   Generate Output
                 </button>
               </td>
@@ -59,6 +59,7 @@ function MainComponent() {
             {apiResponse[1] && Object.keys(apiResponse[1][0]).map(key => (
               <th key={key}>{key}</th>
             ))}
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
@@ -67,6 +68,11 @@ function MainComponent() {
               {Object.values(item).map((value, index) => (
                 <td key={index}>{value}</td>
               ))}
+              <td>
+                <button onClick={() => handleEmailsButtonClick(item['Machine'], item['Cycle Start'])}>
+                  Send Email
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>
@@ -74,8 +80,13 @@ function MainComponent() {
     </div>
   );
 
-  function handleButtonClick(machine, cycleStart) {
+  function handleOutputsButtonClick(machine, cycleStart) {
     const url = `http://37.187.176.243:8001/AA_generate_outputs?serial_num=${machine}&experiment_folder=${cycleStart}`;
+    window.open(url, '_blank');
+  }
+
+  function handleEmailsButtonClick(machine, cycleStart) {
+    const url = `http://37.187.176.243:8001/AA_send_emails?serial_num=${machine}&experiment_folder=${cycleStart}`;
     window.open(url, '_blank');
   }
 
