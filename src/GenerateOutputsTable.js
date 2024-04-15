@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Table({ data }) {
+function GenerateOutputsTable({ data }) {
   return (
     <table>
       <thead>
@@ -27,4 +27,5 @@ function Table({ data }) {
   );
 }
 
-export default Table;
+export default GenerateOutputsTable;
+

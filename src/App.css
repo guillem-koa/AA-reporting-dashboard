@@ -6,7 +6,7 @@
   padding: 20px;
 }
 
-h1 {
+h2 {
   margin: 50px; /* Adds margin of 20 pixels to the top and bottom */
 }
 
@@ -22,6 +22,8 @@ table {
   border-collapse: collapse;
   border-spacing: 0;
   margin: 20px auto; /* Center the table and add margins */
+  text-align: center; /* Center align text in cells */
+
 }
 
 /* Reduce the font size for table header (th) and table data (td) */
