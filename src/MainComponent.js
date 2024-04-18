@@ -70,9 +70,13 @@ function MainComponent() {
                   <td key={index}>{value}</td>
                 ))}
                 <td>
-                  <button onClick={() => handleEmailsButtonClick(item['Machine'], item['Cycle Start'])}>
-                    Send Email
-                  </button>
+                {item['HC'] === '✅' ? (
+                <button onClick={() => handleEmailsButtonClick(item['Machine'], item['Cycle Start'])}>
+                  Send Email
+                </button>
+              ) : (
+                <span>&nbsp;</span>
+              )}
                 </td>
               </tr>
             ))}
