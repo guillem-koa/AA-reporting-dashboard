@@ -10,7 +10,7 @@ function MainComponent() {
 
   const fetchData = async () => {
     try {
-      const response = await fetch('http://37.187.176.243:8001/AA_outputs_and_emails_tables');
+      const response = await fetch('http://37.187.176.243:8001/AA_outputs_and_emails_tables_optimized');
       const data = await response.json();
       setApiResponse(data);
       setIsLoading(false); // Set loading to false once data is fetched
@@ -53,30 +53,34 @@ function MainComponent() {
   const sendEmailsTable = (
     <div>
       <h2>Send Emails Table</h2>
-      <table>
-        <thead>
-          <tr>
-            {apiResponse[1] && Object.keys(apiResponse[1][0]).map(key => (
-              <th key={key}>{key}</th>
-            ))}
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {apiResponse[1] && apiResponse[1].map((item, index) => (
-            <tr key={index}>
-              {Object.values(item).map((value, index) => (
-                <td key={index}>{value}</td>
+      {apiResponse[1] && apiResponse[1].length > 0 ? (
+        <table>
+          <thead>
+            <tr>
+              {Object.keys(apiResponse[1][0]).map(key => (
+                <th key={key}>{key}</th>
               ))}
-              <td>
-                <button onClick={() => handleEmailsButtonClick(item['Machine'], item['Cycle Start'])}>
-                  Send Email
-                </button>
-              </td>
+              <th>Action</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {apiResponse[1].map((item, index) => (
+              <tr key={index}>
+                {Object.values(item).map((value, index) => (
+                  <td key={index}>{value}</td>
+                ))}
+                <td>
+                  <button onClick={() => handleEmailsButtonClick(item['Machine'], item['Cycle Start'])}>
+                    Send Email
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      ) : (
+        <p style={{ textAlign: 'center' }}>Everything is up to date! 🫡 </p>
+      )}
     </div>
   );
 
