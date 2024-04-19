@@ -35,8 +35,16 @@ function MainComponent() {
         <tbody>
           {apiResponse[0] && apiResponse[0].map((item, index) => (
             <tr key={index}>
-              {Object.values(item).map((value, index) => (
-                <td key={index}>{value}</td>
+              {Object.entries(item).map(([key,value]) => (
+                <td key={key}>
+                  {key === "Folder ID" ? (
+                  <button onClick={() => window.location.href = value}>
+                    Open Folder
+                  </button>
+                ) : (
+                  value
+                )}
+                  </td>
               ))}
               <td>
                 <button onClick={() => handleOutputsButtonClick(item['Machine'], item['Cycle Start'])}>
@@ -66,28 +74,37 @@ function MainComponent() {
           <tbody>
             {apiResponse[1].map((item, index) => (
               <tr key={index}>
-                {Object.values(item).map((value, index) => (
-                  <td key={index}>{value}</td>
+                {Object.entries(item).map(([key, value]) => (
+                  <td key={key}>
+                    {key === "Folder ID" ? (
+                      <button onClick={() => window.location.href = value}>
+                        Open Folder
+                      </button>
+                    ) : (
+                      value
+                    )}
+                  </td>
                 ))}
+                {/* This generates the Send Mail button (only if HC is true) */}
                 <td>
-                {item['HC'] === '✅' ? (
-                <button onClick={() => handleEmailsButtonClick(item['Machine'], item['Cycle Start'])}>
-                  Send Email
-                </button>
-              ) : (
-                <span>&nbsp;</span>
-              )}
+                  {item['HC'] === '✅' ? (
+                    <button onClick={() => handleEmailsButtonClick(item['Machine'], item['Cycle Start'])}>
+                      Send Email
+                    </button>
+                  ) : (
+                    <span>&nbsp;</span>
+                  )}
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
       ) : (
-        <p style={{ textAlign: 'center' }}>Everything is up to date! 🫡 </p>
+        <p style={{ textAlign: 'center' }}>Everything is up to date! 🫡</p>
       )}
     </div>
   );
-
+  
   function handleOutputsButtonClick(machine, cycleStart) {
     const url = `http://37.187.176.243:8001/AA_generate_outputs?serial_num=${machine}&experiment_folder=${cycleStart}`;
     window.open(url, '_blank');
@@ -111,6 +128,11 @@ function MainComponent() {
 
   return (
     <div>
+      <div style={{ textAlign: 'center' , margin: '20px'}}>
+      <b>Atention ⚠️</b>
+      <p> The data shown is not from the actual AQUAGAR folder, it's from copy I made. for testing purposes.</p>
+      <p> Generate Outputs button is not functioning properly (yet).</p>
+    </div>
       {generateOutputsTable}
       {sendEmailsTable}
     </div>
