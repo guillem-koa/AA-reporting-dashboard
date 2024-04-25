@@ -4,6 +4,9 @@ function MainComponent() {
   const [apiResponse, setApiResponse] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
+  const [loading, setLoading] = useState(false);
+
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -22,7 +25,8 @@ function MainComponent() {
 
   const generateOutputsTable = (
     <div>
-      <h2>Generate Outputs Table</h2>
+      <h2>Generate Outputs</h2>
+      {apiResponse[0] && apiResponse[0].length > 0 ? (
       <table>
         <thead>
           <tr>
@@ -38,29 +42,36 @@ function MainComponent() {
               {Object.entries(item).map(([key,value]) => (
                 <td key={key}>
                   {key === "Folder ID" ? (
-                  <button onClick={() => window.location.href = value}>
-                    Open Folder
-                  </button>
+                    <button onClick={() => window.open(value, '_blank')}>
+                      Go to Folder
+                    </button>
                 ) : (
                   value
                 )}
                   </td>
               ))}
               <td>
-                <button onClick={() => handleOutputsButtonClick(item['Machine'], item['Cycle Start'])}>
-                  Generate Output
-                </button>
+              {loading ? (
+                  <img src="https://i.gifer.com/ZKZg.gif" alt="Loading..." style={{ width: '20px', height: '20px' }}/>
+                ) : (
+                  <button onClick={() => handleOutputsButtonClick(item['Machine'], item['Cycle Start'], item['Folder ID'].split("/").pop())}>
+                    Generate Output
+                  </button>
+                )}
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+      ) : (
+        <p style={{ textAlign: 'center' }}>Everything is up to date! 🫡</p>
+      )}
     </div>
   );
 
   const sendEmailsTable = (
     <div>
-      <h2>Send Emails Table</h2>
+      <h2>Send Emails</h2>
       {apiResponse[1] && apiResponse[1].length > 0 ? (
         <table>
           <thead>
@@ -68,7 +79,8 @@ function MainComponent() {
               {Object.keys(apiResponse[1][0]).map(key => (
                 <th key={key}>{key}</th>
               ))}
-              <th>Action</th>
+              <th>Test Mail</th>
+              <th>Report Mail</th>
             </tr>
           </thead>
           <tbody>
@@ -77,8 +89,8 @@ function MainComponent() {
                 {Object.entries(item).map(([key, value]) => (
                   <td key={key}>
                     {key === "Folder ID" ? (
-                      <button onClick={() => window.location.href = value}>
-                        Open Folder
+                      <button onClick={() => window.open(value, '_blank')}>
+                        Go to Folder
                       </button>
                     ) : (
                       value
@@ -87,9 +99,18 @@ function MainComponent() {
                 ))}
                 {/* This generates the Send Mail button (only if HC is true) */}
                 <td>
-                  {item['HC'] === '✅' ? (
-                    <button onClick={() => handleEmailsButtonClick(item['Machine'], item['Cycle Start'])}>
-                      Send Email
+                  {item['HC'] === '🟢' ? (
+                    <button onClick={() => handleEmailsButtonClick(item['Machine'], item['Cycle Start'], item['Folder ID'].split("/").pop(), true)}>
+                      Send
+                    </button>
+                  ) : (
+                    <span>&nbsp;</span>
+                  )}
+                </td>
+                <td>
+                  {item['HC'] === '🟢' ? (
+                    <button onClick={() => handleEmailsButtonClick(item['Machine'], item['Cycle Start'], item['Folder ID'].split("/").pop(), false)}>
+                      Send
                     </button>
                   ) : (
                     <span>&nbsp;</span>
@@ -105,14 +126,28 @@ function MainComponent() {
     </div>
   );
   
-  function handleOutputsButtonClick(machine, cycleStart) {
-    const url = `http://37.187.176.243:8001/AA_generate_outputs?serial_num=${machine}&experiment_folder=${cycleStart}`;
-    window.open(url, '_blank');
+  async function handleOutputsButtonClick(machine, cycleStart, experiment_folder_id) {
+    const url = `http://37.187.176.243:8001/AA_generate_outputs?serial_num=${machine}&cycle_start=${cycleStart}&experiment_folder_id=${experiment_folder_id}`;
+    try {
+      setLoading(true); // Set loading state to true when the button is clicked
+      const response = await fetch(url);
+      if (response.ok) {
+        window.open(url, '_blank');
+        window.location.reload(); // Reload the entire page after opening the window
+      } else {
+        console.error('Failed to fetch data:', response.status);
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    } finally {
+      setLoading(false); // Reset loading state after the API call completes
+    }
   }
 
-  function handleEmailsButtonClick(machine, cycleStart) {
-    const url = `http://37.187.176.243:8001/AA_send_emails?serial_num=${machine}&experiment_folder=${cycleStart}`;
+  async function handleEmailsButtonClick(machine, cycleStart, experiment_folder_id, isTest) {
+    const url = `http://37.187.176.243:8001/AA_send_emails?serial_num=${machine}&cycle_start=${cycleStart}&experiment_folder_id=${experiment_folder_id}&test=${isTest}`;
     window.open(url, '_blank');
+    window.location.reload(); // Refresh the entire page
   }
 
   if (isLoading) {
@@ -128,11 +163,6 @@ function MainComponent() {
 
   return (
     <div>
-      <div style={{ textAlign: 'center' , margin: '20px'}}>
-      <b>Atention ⚠️</b>
-      <p> The data shown is not from the actual AQUAGAR folder, it's from copy I made. for testing purposes.</p>
-      <p> Generate Outputs button is not functioning properly (yet).</p>
-    </div>
       {generateOutputsTable}
       {sendEmailsTable}
     </div>
