@@ -99,22 +99,14 @@ function MainComponent() {
                 ))}
                 {/* This generates the Send Mail button (only if HC is true) */}
                 <td>
-                  {item['HC'] === '🟢' ? (
                     <button onClick={() => handleEmailsButtonClick(item['Machine'], item['Cycle Start'], item['Folder ID'].split("/").pop(), true)}>
                       Send
                     </button>
-                  ) : (
-                    <span>&nbsp;</span>
-                  )}
                 </td>
                 <td>
-                  {item['HC'] === '🟢' ? (
                     <button onClick={() => handleEmailsButtonClick(item['Machine'], item['Cycle Start'], item['Folder ID'].split("/").pop(), false)}>
                       Send
                     </button>
-                  ) : (
-                    <span>&nbsp;</span>
-                  )}
                 </td>
               </tr>
             ))}
