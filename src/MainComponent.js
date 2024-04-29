@@ -64,7 +64,7 @@ function MainComponent() {
         </tbody>
       </table>
       ) : (
-        <p style={{ textAlign: 'center' }}>Everything is up to date! 🫡</p>
+        <p style={{ textAlign: 'center' }}>Everything is up to date! ✅ 🫡</p>
       )}
     </div>
   );
@@ -113,7 +113,7 @@ function MainComponent() {
           </tbody>
         </table>
       ) : (
-        <p style={{ textAlign: 'center' }}>Everything is up to date! 🫡</p>
+        <p style={{ textAlign: 'center' }}>Everything is up to date! ✅ 🫡</p>
       )}
     </div>
   );
