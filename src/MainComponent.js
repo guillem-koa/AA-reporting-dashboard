@@ -24,8 +24,10 @@ function MainComponent() {
   };
 
   const generateOutputsTable = (
-    <div>
-      <h2>Generate Outputs</h2>
+    <div class="container">
+    <div class="content">
+      <h2>Generate Outputs 📊</h2>
+
       {apiResponse[0] && apiResponse[0].length > 0 ? (
       <table>
         <thead>
@@ -42,7 +44,7 @@ function MainComponent() {
               {Object.entries(item).map(([key,value]) => (
                 <td key={key}>
                   {key === "Folder ID" ? (
-                    <button onClick={() => window.open(value, '_blank')}>
+                    <button class = "btn" onClick={() => window.open(value, '_blank')}>
                       Go to Folder
                     </button>
                 ) : (
@@ -54,7 +56,7 @@ function MainComponent() {
               {loading ? (
                   <img src="https://i.gifer.com/ZKZg.gif" alt="Loading..." style={{ width: '20px', height: '20px' }}/>
                 ) : (
-                  <button onClick={() => handleOutputsButtonClick(item['Machine'], item['Cycle Start'], item['Folder ID'].split("/").pop())}>
+                  <button class = "btn" onClick={() => handleOutputsButtonClick(item['Machine'], item['Cycle Start'], item['Folder ID'].split("/").pop())}>
                     Generate Output
                   </button>
                 )}
@@ -67,11 +69,13 @@ function MainComponent() {
         <p style={{ textAlign: 'center' }}>Everything is up to date! ✅ 🫡</p>
       )}
     </div>
+    </div>
   );
 
   const sendEmailsTable = (
-    <div>
-      <h2>Send Emails</h2>
+    <div class="container">
+    <div class="content">      
+    <h2>Send Emails 📧</h2>
       {apiResponse[1] && apiResponse[1].length > 0 ? (
         <table>
           <thead>
@@ -89,7 +93,7 @@ function MainComponent() {
                 {Object.entries(item).map(([key, value]) => (
                   <td key={key}>
                     {key === "Folder ID" ? (
-                      <button onClick={() => window.open(value, '_blank')}>
+                      <button class = "btn" onClick={() => window.open(value, '_blank')}>
                         Go to Folder
                       </button>
                     ) : (
@@ -99,12 +103,12 @@ function MainComponent() {
                 ))}
                 {/* This generates the Send Mail button (only if HC is true) */}
                 <td>
-                    <button onClick={() => handleEmailsButtonClick(item['Machine'], item['Cycle Start'], item['Folder ID'].split("/").pop(), true)}>
+                    <button class = "btn" onClick={() => handleEmailsButtonClick(item['Machine'], item['Cycle Start'], item['Folder ID'].split("/").pop(), true)}>
                       Send
                     </button>
                 </td>
                 <td>
-                    <button onClick={() => handleEmailsButtonClick(item['Machine'], item['Cycle Start'], item['Folder ID'].split("/").pop(), false)}>
+                    <button class = "btn" onClick={() => handleEmailsButtonClick(item['Machine'], item['Cycle Start'], item['Folder ID'].split("/").pop(), false)}>
                       Send
                     </button>
                 </td>
@@ -115,6 +119,7 @@ function MainComponent() {
       ) : (
         <p style={{ textAlign: 'center' }}>Everything is up to date! ✅ 🫡</p>
       )}
+    </div>
     </div>
   );
   
@@ -160,6 +165,5 @@ function MainComponent() {
     </div>
   );
 }
-
 
 export default MainComponent;

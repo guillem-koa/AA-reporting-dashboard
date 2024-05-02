@@ -7,9 +7,12 @@
 }
 
 h2 {
-  margin: 50px; /* Adds margin of 20 pixels to the top and bottom */
-}
+  margin-left: 50px;
+  margin-right: 50px;
+  margin-bottom: 50px;
+  margin-top: 30px;
 
+}
 /* Make the table horizontally scrollable */
 .table-container {
   overflow-x: auto;
@@ -18,7 +21,7 @@ h2 {
 }
 
 table {
-  width: 80%;
+  width: 90%;
   border-collapse: collapse;
   border-spacing: 0;
   margin: 20px auto; /* Center the table and add margins */
@@ -40,4 +43,41 @@ th {
 
 tbody tr:nth-child(even) {
   background-color: #f2f2f2;
+}
+
+.container {
+  background-color: transparent; /* Make the container background transparent */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: auto;
+  width: 100%; /* Set the width to 80% of the viewport width */
+  margin: 30px; /* Add margin bottom between containers */
+}
+
+.content {
+  background-color: #ffffff; /* Pure white */
+  border-radius: 30px; /* Rounded corners */
+  padding: 30px; /* Add padding if needed */
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
+  width: 70%; /* Allow the content div to stretch horizontally */
+}
+
+.btn {
+  background-color: #73c2de; /* Green background */
+  border: none; /* Remove default border */
+  color: white; /* White text */
+  padding: 8px 16px; /* Add padding */
+  text-align: center; /* Center align text */
+  text-decoration: none; /* Remove default underline */
+  display: inline-block; /* Make it inline-block to adjust padding and margin */
+  font-size: 14px; /* Adjust font size */
+  margin: 4px; /* Add margin */
+  cursor: pointer; /* Show pointer cursor on hover */
+  border-radius: 18px; /* Rounded corners */
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Add shadow */
+}
+
+.btn:hover {
+  background-color: #5a97ad; /* Darker green background on hover */
 }
