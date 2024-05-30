@@ -29,7 +29,7 @@ function MainComponent() {
   const getUniqueMachines = (data) => {if (!data || !Array.isArray(data)) {
     return [];
   }
-  return [...new Set(data.map(item => item.Machine))];
+  return [...new Set(data.map(item => item.Machine))].sort();
 };
 
   const uniqueMachines = getUniqueMachines(generateOutputsData);
