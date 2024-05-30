@@ -23,23 +23,61 @@ function MainComponent() {
     }
   };
 
+  const generateOutputsData = apiResponse[0];
+  const sendEmailsData = apiResponse[1];
+
+  const getUniqueMachines = (data) => {if (!data || !Array.isArray(data)) {
+    return [];
+  }
+  return [...new Set(data.map(item => item.Machine))];
+};
+
+  const uniqueMachines = getUniqueMachines(generateOutputsData);
+  const [selectedMachines, setSelectedMachines] = useState(uniqueMachines);
+  const [generateOutputsDataFiltered, setFilteredData] = useState(generateOutputsData);
+
+  const handleMachineChange = (event) => {
+    const { value, checked } = event.target;
+    const updatedMachines = checked 
+      ? [...selectedMachines, value]
+      : selectedMachines.filter(machine => machine !== value);
+
+    setSelectedMachines(updatedMachines);
+    setFilteredData(generateOutputsData.filter(item => updatedMachines.includes(item.Machine)));
+  };
+
+
   const generateOutputsTable = (
     <div class="container">
     <div class="content">
       <h2>Generate Outputs 📊</h2>
 
-      {apiResponse[0] && apiResponse[0].length > 0 ? (
+      <div className="checkbox-container">
+          {uniqueMachines.map(machine => (
+            <label key={machine} className="checkbox-label">
+              <input
+                type="checkbox"
+                value={machine}
+                checked={selectedMachines.includes(machine)}
+                onChange={handleMachineChange}
+              />
+              {machine}
+            </label>
+          ))}
+        </div>
+
+      {generateOutputsDataFiltered && generateOutputsDataFiltered.length > 0 ? (
       <table>
         <thead>
           <tr>
-            {apiResponse[0] && Object.keys(apiResponse[0][0]).map(key => (
+            {generateOutputsDataFiltered && Object.keys(generateOutputsDataFiltered[0]).map(key => (
               <th key={key}>{key}</th>
             ))}
           <th>Action</th>
           </tr>
         </thead>
         <tbody>
-          {apiResponse[0] && apiResponse[0].map((item, index) => (
+          {generateOutputsDataFiltered && generateOutputsDataFiltered.map((item, index) => (
             <tr key={index}>
               {Object.entries(item).map(([key,value]) => (
                 <td key={key}>
@@ -76,11 +114,11 @@ function MainComponent() {
     <div class="container">
     <div class="content">      
     <h2>Send Emails 📧</h2>
-      {apiResponse[1] && apiResponse[1].length > 0 ? (
+      {sendEmailsData && sendEmailsData.length > 0 ? (
         <table>
           <thead>
             <tr>
-              {Object.keys(apiResponse[1][0]).map(key => (
+              {Object.keys(sendEmailsData[0]).map(key => (
                 <th key={key}>{key}</th>
               ))}
               <th>Test Mail</th>
@@ -88,7 +126,7 @@ function MainComponent() {
             </tr>
           </thead>
           <tbody>
-            {apiResponse[1].map((item, index) => (
+            {sendEmailsData.map((item, index) => (
               <tr key={index}>
                 {Object.entries(item).map(([key, value]) => (
                   <td key={key}>
@@ -160,10 +198,27 @@ function MainComponent() {
 
   return (
     <div>
-      {generateOutputsTable}
-      {sendEmailsTable}
+      <div className='container'> 
+      <div className="header">
+      <h1>Aquagar Report Generator</h1>
+      <p className="subtitle">Generate Outputs | Send Report Emails</p>
+      <img src="https://koabiotech.com/wp-content/uploads/2022/08/cropped-cropped-cropped-cropped-Logo-KOA-BIOTECH-final-13-1.png" alt="Company Logo" className="logo" />
+      </div>
+      </div>
+      <main className="main-content">
+        {generateOutputsTable}
+        {sendEmailsTable}
+      </main>
+      <div className='container'> 
+      <footer className="footer">
+      <img src="https://koabiotech.com/wp-content/uploads/2022/08/cropped-cropped-cropped-cropped-Logo-KOA-BIOTECH-final-13-1.png" alt="Company Logo" className="logo" />
+        <p>© 2024 KOA Biotech. All rights reserved.</p>
+        <p>Version 1.0.1</p>
+      </footer>
+      </div>
     </div>
   );
+
 }
 
 export default MainComponent;
