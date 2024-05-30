@@ -74,7 +74,9 @@ tbody tr:nth-child(even) {
   flex-wrap: wrap;
   justify-content: center;
   margin-bottom: 40px;
-  width: 100%;
+  padding: 7px; /* Adjust the padding value as needed */
+  margin: 42px
+
 }
 
 .checkbox-label {
